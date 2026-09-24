@@ -38,13 +38,14 @@ def generate_initial_platforms():
     current_y = DOODLE_START_Y + 70 - random.randint(MIN_PLATFORM_GAP, MAX_PLATFORM_GAP)
 
     # ======================== PARTIE 2.2 ========================
-    # TODO : Ajoutez des plateformes jusqu'à ce que la partie supérieure
-    # de l'écran soit remplie.
-    #
-    # À chaque itération, vous devrez notamment déterminer une position
-    # horizontale valide, choisir un type avec choose_platform_type(...),
-    # ajouter la plateforme à PLATFORMS et calculer la hauteur de la suivante.
-    # Les probabilités à utiliser sont données dans le README.
+    while current_y > 0:  # tant qu'on n'a pas atteint le haut de l'écran (y = 0), on continue à remplir
+        x = random.randint(0, SCREEN_WIDTH - PLATFORM_WIDTH)  # x aléatoire, max = SCREEN_WIDTH - largeur pour que la plateforme ne dépasse pas à droite
+
+        platform_type = choose_platform_type(0.65, 0.17, 0.10)  # type aléatoire : 65 % vert, 17 % bleu, 10 % ressort, 8 % marron (le reste)
+
+        PLATFORMS.append(create_platform(x, current_y, platform_type))  # on crée la plateforme et on l'ajoute à la liste globale
+
+        current_y -= random.randint(MIN_PLATFORM_GAP, MAX_PLATFORM_GAP)  # on monte d'un espacement aléatoire (monter = diminuer y)
 
     return
     # ===========================================================
