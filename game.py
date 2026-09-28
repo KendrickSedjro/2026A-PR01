@@ -137,6 +137,8 @@ def scroll_camera():
 
         for platform in PLATFORMS:
             platform["y"] += scroll_distance
+
+        PLATFORMS[:] = [p for p in PLATFORMS if p["y"] < SCREEN_HEIGHT] 
             
         doodle_dict["score"] += scroll_distance
         doodle_dict["high_score"] = max(doodle_dict["high_score"], doodle_dict["score"])
@@ -149,7 +151,6 @@ def scroll_camera():
 
 
 # ======================== PARTIE 3.4 ========================
-#!!!!!!!!!!!!!!Bug: Trop de plateforme!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def generate_new_platforms():
     """
     Génère de nouvelles plateformes au-dessus du haut de l'écran pour maintenir
@@ -160,14 +161,14 @@ def generate_new_platforms():
     else:
         current_y = min(platform["y"] for platform in PLATFORMS)
 
-    while current_y - MIN_PLATFORM_GAP > 0 :
+    current_y -= random.randint(MIN_PLATFORM_GAP, MAX_PLATFORM_GAP) 
+    while current_y - MIN_PLATFORM_GAP > 0:
         x = random.randint(0, SCREEN_WIDTH - PLATFORM_WIDTH)
         platform_type = choose_platform_type(0.55, 0.20, 0.13)
         PLATFORMS.append(create_platform(x, current_y, platform_type))
         current_y -= random.randint(MIN_PLATFORM_GAP, MAX_PLATFORM_GAP)
 
     return None
-
 # ===========================================================
 
 
